@@ -166,6 +166,25 @@
             color: var(--text-dark);
         }
 
+        /* Mobile Menu Overlay Backdrop */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
         /* Hero Section */
         .hero {
             margin-top: 90px;
@@ -254,6 +273,13 @@
             background: var(--white);
             color: var(--primary-color);
             transform: translateY(-3px);
+        }
+
+        /* Transparent button style for Send Message */
+        button.btn-secondary[style*="transparent"]:hover {
+            background: var(--primary-color) !important;
+            color: var(--white) !important;
+            border-color: var(--primary-color) !important;
         }
 
         .hero-image-placeholder {
@@ -1045,6 +1071,244 @@
             transform: scale(1.3);
         }
 
+        /* Contact Form Modal */
+        .contact-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .contact-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-dark);
+        }
+
+        .modal-content h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .modal-content p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 64, 175, 0.3);
+        }
+
+        /* Fixed Call Button */
+        .fixed-call-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(30, 64, 175, 0.4);
+            cursor: pointer;
+            z-index: 1500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+
+        .fixed-call-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(30, 64, 175, 0.5);
+        }
+
+        .fixed-call-button i {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            color: var(--white);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+            cursor: pointer;
+            z-index: 1500;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .scroll-to-top.visible {
+            display: flex;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(30, 64, 175, 0.4);
+        }
+
+        /* Service Areas Section */
+        .service-areas {
+            background: var(--light-bg);
+            padding: 5rem 2rem;
+        }
+
+        .service-areas-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .area-item {
+            background: var(--white);
+            padding: 1.25rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .area-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .area-item i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .area-item h4 {
+            font-size: 1rem;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
         /* Hide desktop dots on desktop */
         @media (min-width: 769px) {
             .slide-dots {
@@ -1163,9 +1427,9 @@
                 font-size: 0.85rem;
             }
 
-            /* Services Section - Enable Carousel */
+            /* Services Section Mobile */
             .services {
-                padding: 3rem 0 2rem;
+                padding: 3rem 1.5rem 2rem;
             }
 
             .services-container {
@@ -1186,12 +1450,9 @@
             }
 
             .services-grid {
-                display: block;
-            }
-
-            .carousel-nav,
-            .carousel-indicators {
-                display: flex;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .service-card {
@@ -1239,9 +1500,9 @@
                 font-size: 0.9rem;
             }
 
-            /* Maintenance Section - Enable Carousel */
+            /* Maintenance Section Mobile */
             .maintenance {
-                padding: 3rem 0 2rem;
+                padding: 3rem 1.5rem 2rem;
             }
 
             .maintenance-container {
@@ -1254,16 +1515,18 @@
             }
 
             .maintenance-grid {
-                display: block;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .maintenance-card {
                 margin: 0 1.5rem;
             }
 
-            /* Testimonials - Enable Carousel */
+            /* Testimonials Mobile */
             .testimonials {
-                padding: 3rem 0 2rem;
+                padding: 3rem 1.5rem 2rem;
             }
 
             .testimonials-container {
@@ -1276,7 +1539,9 @@
             }
 
             .testimonials-grid {
-                display: block;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .testimonial-card {
@@ -1327,6 +1592,56 @@
                 gap: 2rem;
                 margin-bottom: 2rem;
             }
+
+            /* Service Areas Mobile */
+            .service-areas {
+                padding: 3rem 1.5rem;
+            }
+
+            .areas-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .area-item {
+                padding: 1rem;
+            }
+
+            .area-item i {
+                font-size: 1.25rem;
+            }
+
+            .area-item h4 {
+                font-size: 0.9rem;
+            }
+
+            /* Contact Modal Mobile */
+            .modal-content {
+                padding: 2rem 1.5rem;
+                width: 95%;
+            }
+
+            .modal-content h3 {
+                font-size: 1.5rem;
+            }
+
+            /* Fixed Call Button Mobile */
+            .fixed-call-button {
+                width: 55px;
+                height: 55px;
+                bottom: 15px;
+                right: 15px;
+                font-size: 1.3rem;
+            }
+
+            /* Scroll to Top Mobile */
+            .scroll-to-top {
+                bottom: 85px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
         }
 
         /* Extra small devices */
@@ -1370,6 +1685,9 @@
     </style>
 </head>
 <body>
+    <!-- Mobile Menu Overlay Backdrop -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -1385,7 +1703,8 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#testimonials">Reviews</a></li>
                 <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact" class="cta-button">Contact Us</a></li>
+                <li><a href="#service-areas">Service Areas</a></li>
+                
             </ul>
             <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
                 <i class="fas fa-bars"></i>
@@ -1404,11 +1723,16 @@
                         <i class="fas fa-phone"></i>
                         Call: (832) 417-6395
                     </a>
-                    <a href="#services" class="btn-secondary">
-                        <i class="fas fa-tools"></i>
-                        Our Services
+                    <a href="https://wa.me/18324176395" target="_blank" class="btn-secondary" style="background: #25D366;">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp
                     </a>
+                    <button onclick="openContactForm()" class="btn-secondary" style="background: transparent; border: 2px solid var(--white);">
+                        <i class="fas fa-envelope"></i>
+                        Send Message
+                    </button>
                 </div>
+               
             </div>
             <div class="hero-image-placeholder" id="heroImageUpload">
     <img src="Images/Home.png" alt="Hero Image" style="width:100%; height:100%; object-fit:cover;">
@@ -1448,7 +1772,7 @@
             <div class="section-header fade-in">
                 <div class="section-tag">WHAT WE OFFER</div>
                 <h2>Comprehensive HVAC Services</h2>
-                <p>From emergency repairs to new installations, we provide complete heating and cooling solutions tailored to your needs.</p>
+                <p>From emergency repairs to preventive maintenance, we provide complete heating and cooling solutions tailored to your needs.</p>
             </div>
             <div class="services-grid">
                 <div class="service-card fade-in">
@@ -1459,8 +1783,7 @@
                     <p>Expert air conditioning repair and preventive maintenance to keep your system running efficiently year-round.</p>
                     <ul>
                         <li>24/7 emergency AC repair</li>
-                        <li>Noisy or leaking unit diagnostics</li>
-                        <li>Inconsistent cooling solutions</li>
+                        <li>Complete system diagnostics</li>
                         <li>Comprehensive tune-ups</li>
                         <li>Extended system lifespan</li>
                     </ul>
@@ -1477,10 +1800,9 @@
                     <p>Professional air conditioning system installation with customized recommendations for optimal performance.</p>
                     <ul>
                         <li>Complete home cooling assessment</li>
-                        <li>Personalized system recommendations</li>
-                        <li>Certified expert installation</li>
-                        <li>Thorough performance testing</li>
                         <li>Energy-efficient solutions</li>
+                        <li>Certified expert installation</li>
+                        <li>Free in-home estimates</li>
                     </ul>
                     <a href="#contact" class="learn-more">
                         Get Quote <i class="fas fa-arrow-right"></i>
@@ -1494,11 +1816,10 @@
                     <h3>Heater Repair & Service</h3>
                     <p>Reliable heating system repair and maintenance to ensure your comfort during colder months.</p>
                     <ul>
-                        <li>Inconsistent heating resolution</li>
-                        <li>Efficiency optimization</li>
-                        <li>Lower heating costs</li>
-                        <li>All furnace system expertise</li>
                         <li>Emergency heating repairs</li>
+                        <li>Efficiency optimization</li>
+                        <li>All furnace system expertise</li>
+                        <li>Lower heating costs</li>
                     </ul>
                     <a href="#contact" class="learn-more">
                         Schedule Now <i class="fas fa-arrow-right"></i>
@@ -1513,10 +1834,9 @@
                     <p>Upgrade to modern, energy-efficient heating systems for enhanced comfort and reduced energy bills.</p>
                     <ul>
                         <li>Energy-efficient system upgrades</li>
-                        <li>Potential cost savings</li>
                         <li>Smart thermostat integration</li>
-                        <li>Eco-friendly solutions</li>
-                        <li>Free in-home estimates</li>
+                        <li>Professional installation</li>
+                        <li>Free estimates</li>
                     </ul>
                     <a href="#contact" class="learn-more">
                         Free Estimate <i class="fas fa-arrow-right"></i>
@@ -1525,16 +1845,32 @@
 
                 <div class="service-card fade-in">
                     <div class="service-icon">
-                        <i class="fas fa-wind"></i>
+                        <i class="fas fa-tools"></i>
                     </div>
-                    <h3>Indoor Air Quality</h3>
-                    <p>Improve your home's air quality with professional filtration, purification, and humidity control solutions.</p>
+                    <h3>Complete AC Tune-Up</h3>
+                    <p>Comprehensive preventive maintenance to protect your investment and maximize system efficiency.</p>
                     <ul>
-                        <li>Whole-home air filtration</li>
-                        <li>Dehumidifier installation</li>
-                        <li>Air purification systems</li>
-                        <li>Duct sealing services</li>
-                        <li>Indoor air assessment</li>
+                        <li>Drain line & coil inspection</li>
+                        <li>Refrigerant pressure check</li>
+                        <li>Electrical testing & tightening</li>
+                        <li>Blower component adjustment</li>
+                    </ul>
+                    <a href="#contact" class="learn-more">
+                        Schedule Tune-Up <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Bi-Annual Maintenance Plans</h3>
+                    <p>Stay ahead of problems with spring and fall system inspections and priority service.</p>
+                    <ul>
+                        <li>Priority emergency service</li>
+                        <li>Discounted repair rates</li>
+                        <li>Prevent costly breakdowns</li>
+                        <li>Lower utility bills</li>
                     </ul>
                     <a href="#contact" class="learn-more">
                         Learn More <i class="fas fa-arrow-right"></i>
@@ -1543,19 +1879,18 @@
 
                 <div class="service-card fade-in">
                     <div class="service-icon">
-                        <i class="fas fa-building"></i>
+                        <i class="fas fa-wind"></i>
                     </div>
-                    <h3>Commercial HVAC</h3>
-                    <p>Complete commercial heating and cooling solutions designed for businesses of all sizes.</p>
+                    <h3>Indoor Air Quality</h3>
+                    <p>Improve your home's air quality with professional filtration, purification, and humidity control.</p>
                     <ul>
-                        <li>Commercial installations</li>
-                        <li>Preventive maintenance plans</li>
-                        <li>Emergency commercial service</li>
-                        <li>Energy efficiency consulting</li>
-                        <li>Multi-unit systems</li>
+                        <li>Whole-home air filtration</li>
+                        <li>Air purification systems</li>
+                        <li>Dehumidifier installation</li>
+                        <li>Duct sealing services</li>
                     </ul>
                     <a href="#contact" class="learn-more">
-                        Contact Us <i class="fas fa-arrow-right"></i>
+                        Learn More <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
@@ -1610,58 +1945,6 @@
                             <p>Expert service for Carrier, Trane, Lennox, Rheem, Goodman, and all leading HVAC manufacturers.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Maintenance Plans -->
-    <section class="maintenance">
-        <div class="maintenance-container">
-            <div class="section-header fade-in">
-                <div class="section-tag">PREVENTIVE CARE</div>
-                <h2>AC Tune-Up & Maintenance Plans</h2>
-                <p>Protect your investment and maximize system efficiency with our comprehensive maintenance services.</p>
-            </div>
-            <div class="maintenance-grid">
-                <div class="maintenance-card fade-in">
-                    <h3>Complete AC Tune-Up</h3>
-                    <ul>
-                        <li>Primary & secondary drain line inspection</li>
-                        <li>Outdoor condenser coil check</li>
-                        <li>Professional condenser coil washing</li>
-                        <li>Refrigerant pressure verification</li>
-                        <li>AC cycle monitoring</li>
-                        <li>Blower component adjustment</li>
-                        <li>Voltage & amperage testing</li>
-                        <li>Electrical connection tightening</li>
-                    </ul>
-                </div>
-                <div class="maintenance-card fade-in">
-                    <h3>Bi-Annual Plans</h3>
-                    <ul>
-                        <li>Spring & fall system inspections</li>
-                        <li>Priority emergency service</li>
-                        <li>Discounted repair rates</li>
-                        <li>Extended equipment lifespan</li>
-                        <li>Improved energy efficiency</li>
-                        <li>Lower utility bills</li>
-                        <li>Prevent costly breakdowns</li>
-                        <li>Maintained warranty compliance</li>
-                    </ul>
-                </div>
-                <div class="maintenance-card fade-in">
-                    <h3>Service Benefits</h3>
-                    <ul>
-                        <li>Early problem detection</li>
-                        <li>Avoid expensive compressor failures</li>
-                        <li>Refrigerant leak prevention</li>
-                        <li>Optimal system performance</li>
-                        <li>Reduced energy consumption</li>
-                        <li>Enhanced indoor comfort</li>
-                        <li>Peace of mind protection</li>
-                        <li>Professional documentation</li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -1732,25 +2015,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="testimonial-card fade-in">
-                    <i class="fas fa-quote-right quote-icon"></i>
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">Master Comfort was great when we had a late night emergency. Hamid showed up promptly, addressed everything quickly while only suggesting what was actually needed. Will definitely use them in the future.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">R</div>
-                        <div class="author-info">
-                            <h4>Mr. Rick</h4>
-                            <p>Verified Customer</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -1786,27 +2050,125 @@
 </section>
 
 
-    <!-- CTA Section -->
-    <section class="cta-section" id="contact">
-        <div class="cta-container fade-in">
-            <h2>Need HVAC Service Today?</h2>
-            <p>Don't wait for your comfort system to fail. Contact us now for fast, reliable service!</p>
-            <div class="cta-phone">
-                <i class="fas fa-phone-alt"></i>
-                (832) 417-6395
-            </div>
-            <div class="hero-buttons">
-                <a href="tel:832-417-6395" class="btn-primary">
-                    <i class="fas fa-phone"></i>
-                    Call Now
-                </a>
-                <a href="/cdn-cgi/l/email-protection#bbd2d5ddd4fbd6dac8cfdec9d8d4d6ddd4c9cf95d5decf" class="btn-secondary">
-                    <i class="fas fa-envelope"></i>
-                    Email Us
-                </a>
+    <!-- Service Areas Section -->
+    <section class="service-areas" id="service-areas">
+        <div class="service-areas-container">
+            <div class="section-header fade-in">
+                <div class="section-tag">WHERE WE SERVE</div>
+                <h2 style="color:#000000;">Service Areas</h2>
+		<p style="color:#F1C232;">
+  We proudly serve Houston and the surrounding areas, including:
+</p>
+            <div class="areas-grid fade-in">
+		<div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Houston</h4>
+                </div>
+                <div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Missouri City</h4>
+                </div>
+                <div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Sugar Land</h4>
+                </div>
+                <div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Pearland</h4>
+                </div>
+                <div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Stafford</h4>
+                </div>
+                <div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Richmond</h4>
+                </div>
+                <div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Rosenberg</h4>
+                </div>
+                <div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Katy</h4>
+                </div>
+                <div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Bellaire</h4>
+                </div>
+                <div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>West University</h4>
+                </div>
+                <div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Meyerland</h4>
+                </div>
+                <div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Alief</h4>
+                </div>
+		<div class="area-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Other Locations</h4>
+                </div>
+                
             </div>
         </div>
     </section>
+
+    <!-- Contact Form Modal -->
+    <div class="contact-modal" id="contactModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeContactForm()">&times;</span>
+            <h3>Send Us a Message</h3>
+            <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {handleFormSuccess();}"></iframe>
+            <form class="contact-form" action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse" method="POST" target="hidden_iframe" onsubmit="submitted=true; handleFormSubmit(event);">
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="entry.YOUR_NAME_ENTRY_ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone *</label>
+                    <input type="tel" id="phone" name="entry.YOUR_PHONE_ENTRY_ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="entry.YOUR_EMAIL_ENTRY_ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="service">Service Needed</label>
+                    <select id="service" name="entry.YOUR_SERVICE_ENTRY_ID">
+                        <option value="">Select a service</option>
+                        <option value="AC Installation">AC Installation</option>
+                        <option value="AC Repair">AC Repair</option>
+                        <option value="Heating Services">Heating Services</option>
+                        <option value="Maintenance">Maintenance</option>
+                        <option value="Emergency Service">Emergency Service</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="entry.YOUR_MESSAGE_ENTRY_ID" required></textarea>
+                </div>
+                <button type="submit" class="form-submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+ 
+
+    <!-- Fixed Call Button -->
+    <a href="tel:832-417-6395" class="fixed-call-button" aria-label="Call Now">
+        <i class="fas fa-phone"></i>
+    </a>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!-- Footer -->
     <footer class="footer">
@@ -1837,16 +2199,17 @@
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#testimonials">Reviews</a></li>
                     <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#service-areas">Service Areas</a></li>
                 </ul>
             </div>
             <div class="footer-links">
-                <h4>Services</h4>
+                <h4>Our Services</h4>
                 <ul>
-                    <li><a href="#services">AC Repair</a></li>
+                    <li><a href="#services">AC Repair & Maintenance</a></li>
                     <li><a href="#services">AC Installation</a></li>
                     <li><a href="#services">Heater Repair</a></li>
                     <li><a href="#services">Heater Installation</a></li>
-                    <li><a href="#services">Maintenance Plans</a></li>
+                    <li><a href="#services">Indoor Air Quality</a></li>
                 </ul>
             </div>
             <div class="footer-links">
@@ -1860,26 +2223,48 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Master Comfort AC & Heating. All rights reserved. | Licensed & Insured | TACL License #XXXXX</p>
+            <p>&copy; <span id="currentYear"></span> Master Comfort AC & Heating. All rights reserved. | Licensed & Insured | TACL License #XXXXX</p>
         </div>
     </footer>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Set current year dynamically
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
         // Mobile Menu Toggle
         function toggleMobileMenu() {
             const navMenu = document.getElementById('navMenu');
+            const overlay = document.getElementById('mobileMenuOverlay');
             navMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
         }
 
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
+            const scrollToTop = document.getElementById('scrollToTop');
+            
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
+
+            // Show/hide scroll to top button
+            if (window.scrollY > 300) {
+                scrollToTop.classList.add('visible');
+            } else {
+                scrollToTop.classList.remove('visible');
+            }
         });
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1893,6 +2278,7 @@
                     });
                     // Close mobile menu if open
                     document.getElementById('navMenu').classList.remove('active');
+                    document.getElementById('mobileMenuOverlay').classList.remove('active');
                 }
             });
         });
@@ -2059,4 +2445,45 @@ function goToSlide(index) {
     resetAutoPlay();
 }
 function startAutoPlay() {
-    slideInterval = setInterval(() => { changeSlide(1); }, SLIDE_DURATION); } function resetAutoPlay() { clearInterval(slideInterval); startAutoPlay(); } function stopAutoPlay() { clearInterval(slideInterval); } window.addEventListener('load', initSlideshow); // Carousel functionality for mobile class MobileCarousel { constructor(containerSelector) { this.container = document.querySelector(containerSelector); if (!this.container) return; this.wrapper = null; this.slides = []; this.currentIndex = 0; this.init(); } init() { if (window.innerWidth > 768) return; const grid = this.container; const items = Array.from(grid.children); if (items.length === 0) return; this.wrapper = document.createElement('div'); this.wrapper.className = 'carousel-wrapper'; items.forEach(item => { const slide = document.createElement('div'); slide.className = 'carousel-slide'; slide.appendChild(item.cloneNode(true)); this.wrapper.appendChild(slide); this.slides.push(slide); }); grid.innerHTML = ''; const carouselContainer = document.createElement('div'); carouselContainer.className = 'carousel-container'; carouselContainer.appendChild(this.wrapper); grid.appendChild(carouselContainer); this.addNavigation(grid); this.addIndicators(grid); this.updateCarousel(); } addNavigation(parent) { const nav = document.createElement('div'); nav.className = 'carousel-nav'; const prevBtn = document.createElement('button'); prevBtn.className = 'carousel-btn'; prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>'; prevBtn.onclick = () => this.prev(); const nextBtn = document.createElement('button'); nextBtn.className = 'carousel-btn'; nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>'; nextBtn.onclick = () => this.next(); nav.appendChild(prevBtn); nav.appendChild(nextBtn); parent.appendChild(nav); } addIndicators(parent) { const indicators = document.createElement('div'); indicators.className = 'carousel-indicators'; this.slides.forEach((_, index) => { const dot = document.createElement('span'); dot.className = 'carousel-dot'; dot.onclick = () => this.goTo(index); indicators.appendChild(dot); }); parent.appendChild(indicators); } updateCarousel() { this.wrapper.style.transform = `translateX(-${this.currentIndex * 100}%)`; const dots = document.querySelectorAll('.carousel-dot'); dots.forEach((dot, index) => { dot.classList.toggle('active', index === this.currentIndex); }); } next() { if (this.currentIndex < this.slides.length - 1) { this.currentIndex++; this.updateCarousel(); } } prev() { if (this.currentIndex > 0) { this.currentIndex--; this.updateCarousel(); } } goTo(index) { this.currentIndex = index; this.updateCarousel(); } } let servicesCarousel, maintenanceCarousel, testimonialsCarousel; function initCarousels() { if (window.innerWidth <= 768) { servicesCarousel = new MobileCarousel('.services-grid'); maintenanceCarousel = new MobileCarousel('.maintenance-grid'); testimonialsCarousel = new MobileCarousel('.testimonials-grid'); } } window.addEventListener('load', initCarousels); window.addEventListener('resize', () => { if (window.innerWidth <= 768 && !servicesCarousel) { initCarousels(); } }); </script> </body> </html>
+    slideInterval = setInterval(() => { changeSlide(1); }, SLIDE_DURATION); } function resetAutoPlay() { clearInterval(slideInterval); startAutoPlay(); } function stopAutoPlay() { clearInterval(slideInterval); } window.addEventListener('load', initSlideshow); 
+
+// Contact Form Functions
+let submitted = false;
+
+function openContactForm() {
+    document.getElementById('contactModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeContactForm() {
+    document.getElementById('contactModal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('contactModal');
+    if (event.target === modal) {
+        closeContactForm();
+    }
+});
+
+function handleFormSubmit(event) {
+    // Form will submit to Google Forms via iframe
+    // The submitted flag is set in the form's onsubmit
+}
+
+function handleFormSuccess() {
+    if (submitted) {
+        // Show success message
+        alert('Thank you for contacting us! We will get back to you shortly at info@mastercomfort.net.');
+        
+        // Close modal and reset form
+        closeContactForm();
+        document.querySelector('.contact-form').reset();
+        submitted = false;
+    }
+}
+
+// Carousel functionality disabled - removed to show all cards in vertical scroll
+</script> </body> </html>
