@@ -6,6 +6,7 @@
     <title>Master Comfort AC & Heating | Premium HVAC Services in Southwest Houston</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         * {
             margin: 0;
@@ -1720,7 +1721,116 @@
             opacity: 1;
             transform: translateY(0);
         }
-    </style>
+    
+        /* Interactive Map Styles */
+        #serviceMap {
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
+            z-index: 1;
+        }
+
+        .zip-checker-section {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .zip-checker-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .zip-checker-description {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .zip-input-group {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .zip-input-group input {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .zip-input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .zip-check-btn {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+        }
+
+        .zip-check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4);
+        }
+
+        .zip-result-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+
+        .zip-result-message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 2px solid #10b981;
+        }
+
+        .zip-result-message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px solid #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            #serviceMap {
+                height: 400px;
+            }
+            
+            .zip-input-group {
+                flex-direction: column;
+            }
+            
+            .zip-input-group input {
+                min-width: 100%;
+            }
+        }
+
+</style>
 </head>
 <body>
     <!-- Mobile Menu Overlay Backdrop -->
@@ -2099,12 +2209,18 @@
                 </p>
             </div>
             <div class="map-container fade-in">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d443342.0168551!2d-95.8354!3d29.7604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b8b4488d8501%3A0xca0d02def365053b!2sHouston%2C%20TX!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+                <div id="serviceMap"></div>
+            </div>
+            
+            <!-- Zip Code Checker -->
+            <div class="zip-checker-section fade-in">
+                <h3 class="zip-checker-title">Check Your Service Coverage</h3>
+                <p class="zip-checker-description">Enter your zip code to see if you're within our service area</p>
+                <div class="zip-input-group">
+                    <input type="text" id="zipInput" placeholder="Enter your zip code (e.g., 77406)" maxlength="5">
+                    <button class="zip-check-btn" onclick="checkZipCoverage()">Check Coverage</button>
+                </div>
+                <div id="zipResultMessage" class="zip-result-message"></div>
             </div>
         </div>
     </section>
@@ -2477,4 +2593,201 @@ function handleFormSuccess() {
 }
 
 // Carousel functionality disabled - removed to show all cards in vertical scroll
-</script> </body> </html>
+</script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // ========================================
+        // ADMIN CONFIGURATION - EDIT THESE VALUES TO CHANGE MAP SETTINGS
+        // ========================================
+        
+        // Service center coordinates (Rosin Lake Ln, Richmond, TX 77406)
+        const SERVICE_CENTER_LAT = 29.5833;
+        const SERVICE_CENTER_LNG = -95.7556;
+        
+        // Coverage radius in miles (CHANGE THIS VALUE TO ADJUST SERVICE AREA)
+        const COVERAGE_RADIUS_MILES = 50;
+        
+        // Map styling - customize colors and appearance
+        const MAP_SETTINGS = {
+            circleColor: '#1e40af',           // Fill color of coverage circle
+            circleOpacity: 0.25,              // Transparency (0-1)
+            circleBorderColor: '#0ea5e9',     // Border color
+            circleBorderWeight: 3,            // Border thickness
+            centerMarkerTitle: 'Master Comfort AC & Heating',
+            centerMarkerDescription: 'Rosin Lake Ln, Richmond, TX 77406'
+        };
+        
+        // ========================================
+        // MAP INITIALIZATION
+        // ========================================
+        
+        let serviceMap;
+        let coverageCircle;
+        let centerMarker;
+        let zipMarkers = [];
+        
+        function initServiceMap() {
+            // Initialize map
+            serviceMap = L.map('serviceMap').setView([SERVICE_CENTER_LAT, SERVICE_CENTER_LNG], 10);
+            
+            // Add map tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(serviceMap);
+            
+            
+            
+            // Draw coverage circle
+            const radiusMeters = COVERAGE_RADIUS_MILES * 1609.34;
+            coverageCircle = L.circle([SERVICE_CENTER_LAT, SERVICE_CENTER_LNG], {
+                color: MAP_SETTINGS.circleBorderColor,
+                fillColor: MAP_SETTINGS.circleColor,
+                fillOpacity: MAP_SETTINGS.circleOpacity,
+                weight: MAP_SETTINGS.circleBorderWeight,
+                radius: radiusMeters
+            }).addTo(serviceMap);
+            
+            coverageCircle.bindPopup(`<b>Service Coverage Area</b><br>Radius: ${COVERAGE_RADIUS_MILES} miles`);
+            
+            // Fit map to show coverage area
+            serviceMap.fitBounds(coverageCircle.getBounds(), { padding: [50, 50] });
+        }
+        
+        // ========================================
+        // ZIP CODE CHECKER
+        // ========================================
+        
+        async function checkZipCoverage() {
+            const zipCode = document.getElementById('zipInput').value.trim();
+            const resultDiv = document.getElementById('zipResultMessage');
+            
+            // Validate zip code
+            if (!/^\d{5}$/.test(zipCode)) {
+                showZipResult(resultDiv, 'Please enter a valid 5-digit zip code.', 'error');
+                return;
+            }
+            
+            try {
+                // Geocode zip code using Nominatim API
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/search?postalcode=${zipCode}&country=US&format=json&limit=1`
+                );
+                const data = await response.json();
+                
+                if (data.length === 0) {
+                    showZipResult(resultDiv, `Zip code ${zipCode} not found. Please verify and try again.`, 'error');
+                    return;
+                }
+                
+                const lat = parseFloat(data[0].lat);
+                const lng = parseFloat(data[0].lon);
+                const locationName = data[0].display_name;
+                
+                // Calculate distance from service center
+                const distance = calculateDistance(SERVICE_CENTER_LAT, SERVICE_CENTER_LNG, lat, lng);
+                const inCoverage = distance <= COVERAGE_RADIUS_MILES;
+                
+                // Remove previous zip markers
+                zipMarkers.forEach(marker => serviceMap.removeLayer(marker));
+                zipMarkers = [];
+                
+                // Add marker for this zip code
+                const markerIcon = L.divIcon({
+                    className: 'custom-zip-marker',
+                    html: `<div style="background: ${inCoverage ? '#10b981' : '#ef4444'}; width: 25px; height: 25px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"></div>`,
+                    iconSize: [25, 25],
+                    iconAnchor: [12.5, 12.5]
+                });
+                
+                const marker = L.marker([lat, lng], { icon: markerIcon }).addTo(serviceMap);
+                marker.bindPopup(`
+                    <div style="text-align: center;">
+                        <b>Zip Code: ${zipCode}</b><br>
+                        <small>${locationName.split(',')[0]}</small><br>
+                        <b>Distance:</b> ${distance.toFixed(1)} miles<br>
+                        <b style="color: ${inCoverage ? '#10b981' : '#ef4444'};">
+                            ${inCoverage ? '✓ In Service Area' : '✗ Out of Service Area'}
+                        </b>
+                    </div>
+                `).openPopup();
+                
+                zipMarkers.push(marker);
+                
+                // Pan to location
+                serviceMap.setView([lat, lng], 11);
+                
+                // Show result message
+                if (inCoverage) {
+                    showZipResult(
+                        resultDiv,
+                        `✓ Great news! Zip code ${zipCode} is within our service area (${distance.toFixed(1)} miles from our location).`,
+                        'success'
+                    );
+                } else {
+                    showZipResult(
+                        resultDiv,
+                        `We're sorry, zip code ${zipCode} is currently outside our service area. It's ${distance.toFixed(1)} miles from our location (we serve within ${COVERAGE_RADIUS_MILES} miles).`,
+                        'error'
+                    );
+                }
+                
+            } catch (error) {
+                showZipResult(resultDiv, 'Unable to check coverage at this time. Please try again.', 'error');
+                console.error('Geocoding error:', error);
+            }
+        }
+        
+        // ========================================
+        // UTILITY FUNCTIONS
+        // ========================================
+        
+        function calculateDistance(lat1, lng1, lat2, lng2) {
+            // Haversine formula - calculates distance in miles
+            const R = 3959; // Earth's radius in miles
+            const dLat = toRad(lat2 - lat1);
+            const dLng = toRad(lng2 - lng1);
+            
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                     Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                     Math.sin(dLng / 2) * Math.sin(dLng / 2);
+            
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+        
+        function toRad(degrees) {
+            return degrees * (Math.PI / 180);
+        }
+        
+        function showZipResult(element, message, type) {
+            element.textContent = message;
+            element.className = `zip-result-message ${type}`;
+            element.style.display = 'block';
+            
+            // Auto-hide after 15 seconds
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 15000);
+        }
+        
+        // Initialize map when page loads
+        window.addEventListener('load', () => {
+            // Small delay to ensure DOM is ready
+            setTimeout(initServiceMap, 100);
+        });
+        
+        // Allow Enter key to check zip code
+        document.addEventListener('DOMContentLoaded', () => {
+            const zipInput = document.getElementById('zipInput');
+            if (zipInput) {
+                zipInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        checkZipCoverage();
+                    }
+                });
+            }
+        });
+    </script>
+ </body> </html>
