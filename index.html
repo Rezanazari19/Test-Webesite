@@ -354,6 +354,11 @@
             margin-bottom: 0.25rem;
         }
 
+        .trust-item h3 .star {
+            color: #FBBC04;
+            margin-left: 0.1rem;
+        }
+
         .trust-item p {
             color: var(--text-light);
             font-size: 0.95rem;
@@ -1284,6 +1289,21 @@
             margin: 0 auto;
         }
 
+        .map-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 500px;
+            border: 0;
+        }
+
         .areas-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -1612,6 +1632,10 @@
                 padding: 3rem 1.5rem;
             }
 
+            .map-container iframe {
+                height: 350px;
+            }
+
             .areas-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 0.75rem;
@@ -1773,9 +1797,9 @@
                 <p>Emergency Service</p>
             </div>
             <div class="trust-item">
-                <i class="fas fa-certificate"></i>
-                <h3>100%</h3>
-                <p>Satisfaction Guarantee</p>
+                <i class="fab fa-google" style="color: #4285F4;"></i>
+                <h3>4.9<span class="star">★</span></h3>
+                <p>Google Rating</p>
             </div>
         </div>
     </section>
@@ -2070,63 +2094,17 @@
             <div class="section-header fade-in">
                 <div class="section-tag">WHERE WE SERVE</div>
                 <h2 style="color:#000000;">Service Areas</h2>
-		<p style="color:#F1C232;">
-  We proudly serve Houston and the surrounding areas, including:
-</p>
-            <div class="areas-grid fade-in">
-		<div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Houston</h4>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Missouri City</h4>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Sugar Land</h4>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Pearland</h4>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Stafford</h4>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Richmond</h4>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Rosenberg</h4>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Katy</h4>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Bellaire</h4>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>West University</h4>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Meyerland</h4>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Alief</h4>
-                </div>
-		<div class="area-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>Other Locations</h4>
-                </div>
-                
+                <p style="color:#F1C232;">
+                    We proudly serve Houston and the surrounding areas
+                </p>
+            </div>
+            <div class="map-container fade-in">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d443342.0168551!2d-95.8354!3d29.7604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b8b4488d8501%3A0xca0d02def365053b!2sHouston%2C%20TX!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
     </section>
@@ -2230,7 +2208,6 @@
                 <h4>Contact Info</h4>
                 <ul>
                     <li><a href="tel:832-417-6395"><i class="fas fa-phone"></i> (832) 417-6395</a></li>
-                    <li><a href="/cdn-cgi/l/email-protection#ee87808881ae838f9d9a8b9c8d818388819c9ac0808b9a"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="2e474048416e434f5d5a4b5c4d414348415c5a00404b5a">[email&#160;protected]</span></a></li>
                     <li><i class="fas fa-map-marker-alt"></i> Southwest Houston, TX</li>
                     <li><i class="fas fa-clock"></i> 24/7 Emergency Service</li>
                 </ul>
@@ -2501,4 +2478,3 @@ function handleFormSuccess() {
 
 // Carousel functionality disabled - removed to show all cards in vertical scroll
 </script> </body> </html>
-
